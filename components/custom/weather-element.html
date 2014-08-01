@@ -1,0 +1,48 @@
+<polymer-element name="weather-element" attributes="city">
+  <template>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">	
+    <div class="form-group">
+		<label class="control-label">{{ city == null || city == "" ? "Aucune ville": city }}  :</label>
+        <div>
+		    <input type="text" class="form-control" readonly value="{{value}}">
+        </div>
+    </div>
+  </template>
+  <script>(function(Polymer){
+
+	function getTemperature(url, cityName, callback) {
+        var request = new XMLHttpRequest();
+        var param = "?q=" + cityName;
+        request.open('GET', url + param, true);
+
+        request.onreadystatechange = function() {	
+            if (this.readyState === 4){
+                if (this.status >= 200 && this.status < 400){
+                    // Success!
+                    var result = JSON.parse(this.responseText);
+                    if (result.cod != "404" && result.list != null && result.list.length > 0){
+                      var temperature = Math.round(result.list[0].main.temp - 272.15) + "°C";
+                      callback(temperature);
+                  }
+                }
+                else {
+                    // Error :(
+                    callback("Error " + this.status);
+                }
+            }
+        };
+
+	      request.send();
+        request = null;
+    }
+
+  	Polymer('weather-element',{
+		 ready: function(){
+ 			getTemperature("http://api.openweathermap.org/data/2.5/find/", this.city, function(result){ this.value = result ;}.bind(this) );
+	 	},
+    attributeChanged: function(attrName, oldVal, newVal) {
+      getTemperature("http://api.openweathermap.org/data/2.5/find/", this.city, function(result){ this.value = result ;}.bind(this) )
+    }
+  });
+  }(Polymer));</script>
+</polymer-element>
