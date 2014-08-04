@@ -4,7 +4,11 @@
   "dependencies": {
     "polymer": "Polymer/polymer#master",
     "platform": "Polymer/platform#master",
+    "core-component-page": "Polymer/core-elements", 
     "angular": "angular#1.2.21",
     "angular-route": "angular-route#v1.2.21"
+  },
+  "resolutions": {
+    "core-component-page": "master"
   }
 }

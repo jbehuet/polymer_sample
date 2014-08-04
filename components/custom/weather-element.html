@@ -1,3 +1,19 @@
+<!--
+Copyright 2014 J.Behuet Authors. All rights reserved.
+-->
+
+<!--
+Récupére la température d'une ville.
+
+### Code
+Example:
+
+    <weather-element city="chartres"></weather-element>
+
+<em>Basé sur l'API d'openweathermap.org</em>
+
+@class weather-element
+-->
 <polymer-element name="weather-element" attributes="city">
   <template>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">	
@@ -9,6 +25,13 @@
     </div>
   </template>
   <script>(function(Polymer){
+  /**
+   * City name searched.
+   *
+   * @attribute city
+   * @type String
+   * @default ''
+   */
 
 	function getTemperature(url, cityName, callback) {
         var request = new XMLHttpRequest();
